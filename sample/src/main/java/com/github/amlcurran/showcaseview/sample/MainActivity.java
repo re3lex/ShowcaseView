@@ -38,6 +38,8 @@ import android.widget.TextView;
 import com.espian.showcaseview.sample.R;
 import com.github.amlcurran.showcaseview.OnShowcaseEventListener;
 import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.drawer.MaterialShowcaseDrawer;
+import com.github.amlcurran.showcaseview.drawer.RectangleShowcaseDrawer;
 import com.github.amlcurran.showcaseview.sample.animations.AnimationSampleActivity;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
@@ -78,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setContentText(R.string.showcase_main_message)
                 .setStyle(R.style.CustomShowcaseTheme2)
                 .setShowcaseEventListener(this)
+                //.setShowcaseDrawer(new RectangleShowcaseDrawer())
+                .setShowcaseDrawer(new MaterialShowcaseDrawer(getResources(), true))
                 .replaceEndButton(R.layout.view_custom_button)
                 .build();
         sv.setButtonPosition(lps);

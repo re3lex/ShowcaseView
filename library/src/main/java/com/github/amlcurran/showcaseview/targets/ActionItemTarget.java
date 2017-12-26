@@ -18,6 +18,7 @@ package com.github.amlcurran.showcaseview.targets;
 
 import android.app.Activity;
 import android.graphics.Point;
+import android.view.View;
 import android.view.ViewParent;
 
 /**
@@ -28,26 +29,35 @@ import android.view.ViewParent;
  */
 public class ActionItemTarget implements Target {
 
-    private final Activity mActivity;
-    private final int mItemId;
+  private final Activity mActivity;
+  private final int mItemId;
 
-    ActionBarViewWrapper mActionBarWrapper;
+  ActionBarViewWrapper mActionBarWrapper;
+  private View view;
 
-    public ActionItemTarget(Activity activity, int itemId) {
-        mActivity = activity;
-        mItemId = itemId;
+  public ActionItemTarget(Activity activity, int itemId) {
+    mActivity = activity;
+    mItemId = itemId;
+  }
+
+  @Override
+  public Point getPoint() {
+    return new ViewTarget(getView()).getPoint();
+  }
+
+  protected void setUp() {
+    Reflector reflector = ReflectorFactory.getReflectorForActivity(mActivity);
+    ViewParent p = reflector.getActionBarView(); //ActionBarView
+    mActionBarWrapper = new ActionBarViewWrapper(p);
+  }
+
+  @Override
+  public View getView() {
+    if (view == null) {
+      setUp();
+      view = mActionBarWrapper.getActionItem(mItemId);
     }
-
-    @Override
-    public Point getPoint() {
-        setUp();
-        return new ViewTarget(mActionBarWrapper.getActionItem(mItemId)).getPoint();
-    }
-
-    protected void setUp() {
-        Reflector reflector = ReflectorFactory.getReflectorForActivity(mActivity);
-        ViewParent p = reflector.getActionBarView(); //ActionBarView
-        mActionBarWrapper = new ActionBarViewWrapper(p);
-    }
+    return view;
+  }
 
 }

@@ -20,6 +20,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.support.annotation.ColorInt;
 
+import com.github.amlcurran.showcaseview.targets.Target;
+
 /**
  * Class to implement your own drawing of a showcase view, should you want more
  * control. See the other implementations for examples
@@ -78,4 +80,6 @@ public interface ShowcaseDrawer {
      * @param bitmapBuffer bitmap to draw
      */
     void drawToCanvas(Canvas canvas, Bitmap bitmapBuffer);
+
+    void setTarget(Target target);
 }

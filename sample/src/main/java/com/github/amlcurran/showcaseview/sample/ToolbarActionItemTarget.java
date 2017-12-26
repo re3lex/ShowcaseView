@@ -19,6 +19,7 @@ package com.github.amlcurran.showcaseview.sample;
 import android.graphics.Point;
 import android.support.annotation.IdRes;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.github.amlcurran.showcaseview.targets.Target;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
@@ -31,17 +32,26 @@ import com.github.amlcurran.showcaseview.targets.ViewTarget;
  */
 public class ToolbarActionItemTarget implements Target {
 
-    private final Toolbar toolbar;
-    private final int menuItemId;
+  private final Toolbar toolbar;
+  private final int menuItemId;
+  private View view;
 
-    public ToolbarActionItemTarget(Toolbar toolbar, @IdRes int itemId) {
-        this.toolbar = toolbar;
-        this.menuItemId = itemId;
+  public ToolbarActionItemTarget(Toolbar toolbar, @IdRes int itemId) {
+    this.toolbar = toolbar;
+    this.menuItemId = itemId;
+  }
+
+  @Override
+  public Point getPoint() {
+    return new ViewTarget(getView()).getPoint();
+  }
+
+
+  @Override
+  public View getView() {
+    if (view == null) {
+      view = toolbar.findViewById(menuItemId);
     }
-
-    @Override
-    public Point getPoint() {
-        return new ViewTarget(toolbar.findViewById(menuItemId)).getPoint();
-    }
-
+    return view;
+  }
 }

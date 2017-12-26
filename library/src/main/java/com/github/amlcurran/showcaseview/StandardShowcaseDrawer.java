@@ -25,6 +25,8 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
 
+import com.github.amlcurran.showcaseview.targets.Target;
+
 class StandardShowcaseDrawer implements ShowcaseDrawer {
 
     protected final Paint eraserPaint;
@@ -32,6 +34,7 @@ class StandardShowcaseDrawer implements ShowcaseDrawer {
     private final Paint basicPaint;
     private final float showcaseRadius;
     protected int backgroundColour;
+    private Target target;
 
     public StandardShowcaseDrawer(Resources resources, Resources.Theme theme) {
         PorterDuffXfermode xfermode = new PorterDuffXfermode(PorterDuff.Mode.MULTIPLY);
@@ -94,4 +97,8 @@ class StandardShowcaseDrawer implements ShowcaseDrawer {
         canvas.drawBitmap(bitmapBuffer, 0, 0, basicPaint);
     }
 
+    @Override
+    public void setTarget(Target target) {
+        this.target = target;
+    }
 }

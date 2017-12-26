@@ -17,6 +17,7 @@
 package com.github.amlcurran.showcaseview.targets;
 
 import android.graphics.Point;
+import android.view.View;
 
 public interface Target {
     Target NONE = new Target() {
@@ -24,7 +25,14 @@ public interface Target {
         public Point getPoint() {
             return new Point(1000000, 1000000);
         }
+
+        @Override
+        public View getView() {
+            return null;
+        }
     };
 
     Point getPoint();
+
+    View getView();
 }

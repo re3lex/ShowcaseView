@@ -13,6 +13,7 @@ import android.os.Bundle;
 import com.espian.showcaseview.sample.R;
 import com.github.amlcurran.showcaseview.ShowcaseDrawer;
 import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.Target;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 public class CustomShowcaseActivity extends Activity {
@@ -38,6 +39,7 @@ public class CustomShowcaseActivity extends Activity {
         private final Paint basicPaint;
         private final int eraseColour;
         private final RectF renderRect;
+        private Target target;
 
         public CustomShowcaseView(Resources resources) {
             width = resources.getDimension(R.dimen.custom_showcase_width);
@@ -97,7 +99,10 @@ public class CustomShowcaseActivity extends Activity {
         public void drawToCanvas(Canvas canvas, Bitmap bitmapBuffer) {
             canvas.drawBitmap(bitmapBuffer, 0, 0, basicPaint);
         }
-
+        @Override
+        public void setTarget(Target target) {
+            this.target = target;
+        }
     }
 
 }
