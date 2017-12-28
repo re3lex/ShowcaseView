@@ -1,5 +1,6 @@
 package com.github.amlcurran.showcaseview.drawer;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -8,6 +9,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.view.View;
 
+import com.github.amlcurran.showcaseview.R;
 import com.github.amlcurran.showcaseview.ShowcaseDrawer;
 import com.github.amlcurran.showcaseview.targets.Target;
 
@@ -21,17 +23,20 @@ public class RectangleShowcaseDrawer implements ShowcaseDrawer {
   private int height;
   private int width;
   private Target target;
+  private int borderColor;
+  private float borderWidth;
 
-  public RectangleShowcaseDrawer() {
-    this(10);
+  public RectangleShowcaseDrawer(Resources resources) {
+    this(resources, 10);
   }
 
-  public RectangleShowcaseDrawer(int margin) {
+  public RectangleShowcaseDrawer(Resources resources, int margin) {
+    this.borderWidth = resources.getDimension(R.dimen.showcase_radius_material_outer_width);
     this.margin = margin;
     this.eraserPaint = new Paint();
     this.eraserPaint.setColor(0xFFFFFF);
-    this.eraserPaint.setAlpha(0);
-    this.eraserPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.MULTIPLY));
+    //this.eraserPaint.setAlpha(0);
+    this.eraserPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
     this.eraserPaint.setAntiAlias(true);
     this.basicPaint = new Paint();
     renderRect = new RectF();
@@ -45,6 +50,14 @@ public class RectangleShowcaseDrawer implements ShowcaseDrawer {
   @Override
   public void drawShowcase(Bitmap buffer, float x, float y, float scaleMultiplier) {
     Canvas bufferCanvas = new Canvas(buffer);
+    renderRect.left = x - width / 2f - borderWidth;
+    renderRect.right = x + width / 2f + borderWidth;
+    renderRect.top = y - height / 2f - borderWidth;
+    renderRect.bottom = y + height / 2f + borderWidth;
+    this.eraserPaint.setColor(borderColor);
+    bufferCanvas.drawRect(renderRect, eraserPaint);
+
+    eraserPaint.setAlpha(0);
     renderRect.left = x - width / 2f;
     renderRect.right = x + width / 2f;
     renderRect.top = y - height / 2f;
@@ -54,22 +67,32 @@ public class RectangleShowcaseDrawer implements ShowcaseDrawer {
 
   @Override
   public int getShowcaseWidth() {
-    return (int) width;
+    return (int) (width + 2 * borderWidth);
   }
 
   @Override
   public int getShowcaseHeight() {
-    return (int) height;
+    return (int) (height + borderWidth * 2);
   }
 
   @Override
   public float getBlockedRadius() {
-    return width;
+    return width + borderWidth;
   }
 
   @Override
   public void setBackgroundColour(int backgroundColor) {
     this.backgroundColor = backgroundColor;
+  }
+
+  @Override
+  public void setBorderColour(int borderColor) {
+    this.borderColor = borderColor;
+  }
+
+  @Override
+  public void setBorderWidth(float borderWidth) {
+    this.borderWidth = borderWidth;
   }
 
   @Override

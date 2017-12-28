@@ -66,6 +66,10 @@ public interface ShowcaseDrawer {
      */
     void setBackgroundColour(@ColorInt int backgroundColor);
 
+    void setBorderColour(@ColorInt int borderColor);
+
+    void setBorderWidth(float borderWidth);
+
     /**
      * Remove all drawing on the bitmap. Typically, this would do a color fill of the background
      * color. See {@link StandardShowcaseDrawer} for an example

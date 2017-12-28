@@ -91,6 +91,16 @@ public class CustomShowcaseActivity extends Activity {
         }
 
         @Override
+        public void setBorderColour(int borderColor) {
+
+        }
+
+        @Override
+        public void setBorderWidth(float borderWidth) {
+
+        }
+
+        @Override
         public void erase(Bitmap bitmapBuffer) {
             bitmapBuffer.eraseColor(eraseColour);
         }

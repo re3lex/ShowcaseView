@@ -35,6 +35,7 @@ class StandardShowcaseDrawer implements ShowcaseDrawer {
     private final float showcaseRadius;
     protected int backgroundColour;
     private Target target;
+    private int borderColor;
 
     public StandardShowcaseDrawer(Resources resources, Resources.Theme theme) {
         PorterDuffXfermode xfermode = new PorterDuffXfermode(PorterDuff.Mode.MULTIPLY);
@@ -80,6 +81,16 @@ class StandardShowcaseDrawer implements ShowcaseDrawer {
     @Override
     public float getBlockedRadius() {
         return showcaseRadius;
+    }
+
+    @Override
+    public void setBorderColour(int borderColor) {
+        this.borderColor = borderColor;
+    }
+
+    @Override
+    public void setBorderWidth(float borderWidth) {
+        //TODO
     }
 
     @Override

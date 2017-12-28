@@ -59,6 +59,8 @@ public class ShowcaseView extends RelativeLayout
   public static final int ABOVE_SHOWCASE = 1;
   public static final int BELOW_SHOWCASE = 3;
   private Target target;
+  private int borderColor;
+  private float borderWidth;
 
   @Retention(RetentionPolicy.SOURCE)
   @IntDef({UNDEFINED, LEFT_OF_SHOWCASE, RIGHT_OF_SHOWCASE, ABOVE_SHOWCASE, BELOW_SHOWCASE})
@@ -277,6 +279,13 @@ public class ShowcaseView extends RelativeLayout
       mEventListener = OnShowcaseEventListener.NONE;
     }
   }
+  public void setBorderWidth(float width) {
+    this.borderWidth = width;
+    if(showcaseDrawer != null) {
+      showcaseDrawer.setBorderWidth(this.borderWidth);
+    }
+  }
+
 
   public void setButtonText(CharSequence text) {
     if (mEndButton != null) {
@@ -510,6 +519,11 @@ public class ShowcaseView extends RelativeLayout
       return this;
     }
 
+    public Builder setBorderWidth(float width) {
+      showcaseView.setBorderWidth(width);
+      return this;
+    }
+
     /**
      * Set the title text shown on the ShowcaseView.
      */
@@ -688,9 +702,11 @@ public class ShowcaseView extends RelativeLayout
     this.showcaseDrawer = showcaseDrawer;
     this.showcaseDrawer.setBackgroundColour(backgroundColor);
     this.showcaseDrawer.setShowcaseColour(showcaseColor);
+    this.showcaseDrawer.setBorderColour(borderColor);
     hasAlteredText = true;
     invalidate();
   }
+
 
   private void setContentTitlePaint(TextPaint textPaint) {
     this.textDrawer.setTitlePaint(textPaint);
@@ -799,6 +815,7 @@ public class ShowcaseView extends RelativeLayout
 
   private void updateStyle(TypedArray styled, boolean invalidate) {
     backgroundColor = styled.getColor(R.styleable.ShowcaseView_sv_backgroundColor, Color.argb(128, 80, 80, 80));
+    borderColor = styled.getColor(R.styleable.ShowcaseView_sv_showcaseBorderColor, Color.argb(128, 80, 80, 80));
     showcaseColor = styled.getColor(R.styleable.ShowcaseView_sv_showcaseColor, HOLO_BLUE);
     String buttonText = styled.getString(R.styleable.ShowcaseView_sv_buttonText);
     if (TextUtils.isEmpty(buttonText)) {
