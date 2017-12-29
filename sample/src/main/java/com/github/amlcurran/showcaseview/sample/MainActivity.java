@@ -80,8 +80,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setContentText(R.string.showcase_main_message)
                 .setStyle(R.style.CustomShowcaseTheme4)
                 .setShowcaseEventListener(this)
-                .setShowcaseDrawer(new RectangleShowcaseDrawer(getResources()))
-                //.setShowcaseDrawer(new MaterialShowcaseDrawer(getResources(), true))
+                //.setShowcaseDrawer(new RectangleShowcaseDrawer(getResources()))
+                .setShowcaseDrawer(new MaterialShowcaseDrawer(getResources(), true))
                 .replaceEndButton(R.layout.view_custom_button)
                 .build();
         sv.setButtonPosition(lps);

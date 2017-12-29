@@ -832,6 +832,7 @@ public class ShowcaseView extends RelativeLayout
 
     showcaseDrawer.setShowcaseColour(showcaseColor);
     showcaseDrawer.setBackgroundColour(backgroundColor);
+    showcaseDrawer.setBorderColour(borderColor);
     tintButton(showcaseColor, tintButton);
     mEndButton.setText(buttonText);
     textDrawer.setTitleStyling(titleTextAppearance);
