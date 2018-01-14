@@ -99,6 +99,8 @@ public class ShowcaseView extends RelativeLayout
   private boolean blockAllTouches;
   private final int[] positionInWindow = new int[2];
 
+  private boolean buttonAutoPositioning;
+
   protected ShowcaseView(Context context, boolean newStyle) {
     this(context, null, R.styleable.CustomTheme_showcaseViewStyle, newStyle);
   }
@@ -157,6 +159,14 @@ public class ShowcaseView extends RelativeLayout
       addView(mEndButton);
     }
 
+  }
+
+  public boolean isButtonAutoPositioning() {
+    return buttonAutoPositioning;
+  }
+
+  public void setButtonAutoPositioning(boolean buttonAutoPositioning) {
+    this.buttonAutoPositioning = buttonAutoPositioning;
   }
 
   private boolean hasShot() {
@@ -303,6 +313,30 @@ public class ShowcaseView extends RelativeLayout
     hasAlteredText = false;
   }
 
+  private void recalculateButtonPosition() {
+    Rect rect = hasShowcaseView() ? showcaseAreaCalculator.getShowcaseRect() : new Rect();
+    showcaseAreaCalculator.calculateShowcaseRect(showcaseX, showcaseY, showcaseDrawer);
+
+    int x0 = rect.left;
+    int y0 = rect.top;
+
+    int x1 = rect.right;
+    int y1 = rect.bottom;
+
+    int pos[] = new int[2];
+    mEndButton.getLocationInWindow(pos);
+    int bX0 = pos[0];
+    int bY0 = pos[1];
+    int bY1 = bY0 + mEndButton.getHeight();
+
+    if(bX0> x0 && bX0 < x1
+      && (bY0 > y0 && bY0 < y1 || bY1 > y0 && bY1 < y1)) {
+      int margin = (int) getResources().getDimension(R.dimen.button_margin);
+      mEndButton.setY(y0 - mEndButton.getHeight() - margin);
+    }
+
+  }
+
   @SuppressWarnings("NullableProblems")
   @Override
   protected void dispatchDraw(Canvas canvas) {
@@ -320,6 +354,9 @@ public class ShowcaseView extends RelativeLayout
       showcaseDrawer.drawShowcase(bitmapBuffer, showcaseX, showcaseY, scaleMultiplier);
       showcaseDrawer.drawToCanvas(canvas, bitmapBuffer);
       recalculateText();
+      if(buttonAutoPositioning) {
+        recalculateButtonPosition();
+      }
     }
 
     // Draw the text on the screen, recalculating its position if necessary
@@ -654,6 +691,11 @@ public class ShowcaseView extends RelativeLayout
      */
     public Builder replaceEndButton(Button button) {
       showcaseView.setEndButton(button);
+      return this;
+    }
+
+    public Builder setButtonAutoPositioning(boolean v) {
+      showcaseView.setButtonAutoPositioning(v);
       return this;
     }
 

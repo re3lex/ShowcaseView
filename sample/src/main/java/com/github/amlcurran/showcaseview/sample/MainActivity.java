@@ -41,6 +41,8 @@ import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.drawer.MaterialShowcaseDrawer;
 import com.github.amlcurran.showcaseview.drawer.RectangleShowcaseDrawer;
 import com.github.amlcurran.showcaseview.sample.animations.AnimationSampleActivity;
+import com.github.amlcurran.showcaseview.targets.PointTarget;
+import com.github.amlcurran.showcaseview.targets.Target;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
@@ -73,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         lps.setMargins(margin, margin, margin, margin);
 
         ViewTarget target = new ViewTarget(R.id.buttonBlocked, this);
+
         sv = new ShowcaseView.Builder(this)
                 .withMaterialShowcase()
                 .setTarget(target)
@@ -80,8 +83,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .setContentText(R.string.showcase_main_message)
                 .setStyle(R.style.CustomShowcaseTheme4)
                 .setShowcaseEventListener(this)
-                //.setShowcaseDrawer(new RectangleShowcaseDrawer(getResources()))
-                .setShowcaseDrawer(new MaterialShowcaseDrawer(getResources(), true))
+                .setShowcaseDrawer(new RectangleShowcaseDrawer(getResources()))
+                //.setShowcaseDrawer(new MaterialShowcaseDrawer(getResources(), true))
                 .replaceEndButton(R.layout.view_custom_button)
                 .build();
         sv.setButtonPosition(lps);
@@ -163,6 +166,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private enum DemoOption {
+        BOTTOM_BUTTON(R.string.title_bottom_button, R.string.sum_bottom_button, BottomButtonActivity.class),
         ACTION_ITEMS(R.string.title_action_items, R.string.sum_action_items, ActionItemsSampleActivity.class),
         FRAGMENTS(R.string.title_fragments, R.string.sum_fragments, FragmentDemoActivity.class),
         EVENTS(R.string.title_events, R.string.sum_event, EventsActivity.class),
